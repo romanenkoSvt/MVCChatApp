@@ -1,0 +1,35 @@
+﻿@using EFCoreLibrary.Models
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h5 class="display-5">Добро пожаловать!</h5>
+</div>
+<br />
+
+
+<div class="row">&nbsp;</div>
+    <input type="hidden" id="userInput" value="@ViewBag.UserChatName" data-bind="value: userName" />
+
+<div class="mb-5 row">    
+    <div class="col-6">
+        <input type="text" class="form-control" id="messageInput" data-bind="value: userMessage" placeholder="Введите сообщение" maxlength="300" />
+    </div>
+    <div class="col-2">
+        <input type="button" class="btn btn-primary mb-3" id="sendButton" value="Отправить" data-bind="click: send, enable: userMessage().length > 1" />
+    </div>
+</div>
+ 
+<ul class="col-8 text-break" data-bind="foreach: messagesList">
+        <li><span data-bind="text: message"></span></li>
+</ul>
+
+<div class="row">&nbsp;</div>
+<div class="row">
+   
+</div>
+
+
+
+<script src="~/js/mainChat.js"></script>

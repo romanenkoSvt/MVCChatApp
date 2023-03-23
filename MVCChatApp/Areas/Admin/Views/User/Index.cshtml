@@ -1,0 +1,88 @@
+﻿@model MVCChatApp.Areas.Admin.Models.UsersFilteredModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Список пользователей</h3>
+<br/>
+<form class="mb-4" asp-action="Index" asp-controller="User" method="get">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+   
+
+    <div class="row">
+        <div class="form-group col-4">
+            <input asp-for="SearchString" class="form-control" type="text" placeholder="Поиск по Ф.И.О/ емейл/ нику">
+        </div>
+
+    
+        <div class="form-group col-4">
+            <select asp-for="IsBanned" class="form-control" asp-items="@ViewBag.IsBanned">
+                <option value="">Все пользователи</option>
+            </select>
+        </div>
+        
+        <div class="form-group col-auto  align-items-end d-flex">
+            <button type="submit" class="btn btn-primary"> <i class="fa fa-search"></i> &nbsp; Поиск</button>
+        </div>
+    </div>
+</form>
+
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+             <th>
+               Роль
+            </th>   
+            <th>
+             Емейл  
+            </th>
+            <th> 
+                Имя 
+            </th>
+           
+            <th>
+              Фамилия
+            </th>
+            <th>
+               Ник
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+               Номер телефона
+            </th>   
+            <th> </th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@item.UserRole</td>
+                <td>@item.Email</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.ChatName</td>
+                <td>@item.Status </td>
+                <td>@item.PhoneNumber</td>
+                <td>
+                     @if(item.UserRole != "Administrator"){
+                    
+                        @if (item.IsBanned)
+                        {
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" asp-route-isBanned="@(false)">Разблокировать</a>
+                        }
+                        else
+                        {
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" asp-route-isBanned="@(true)">Заблокировать</a>
+                        }
+                   
+                     }
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>
